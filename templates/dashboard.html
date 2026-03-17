@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container page-hero">
+    <h1>Your Dashboard</h1>
+    <p>Welcome back! Here are your current event bookings and enquiries.</p>
+</section>
+
+<section class="container" style="padding-bottom: 60px;">
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('logout') }}" class="btn btn-outline">Logout</a>
+    </div>
+
+    <h2>My Bookings</h2>
+    {% if bookings and bookings.length > 0 %}
+    <div class="table">
+        <div class="row head">
+            <div>Event Type</div>
+            <div>Date</div>
+            <div>Location</div>
+            <div>Budget</div>
+            <div>Notes</div>
+            <div>Booked On</div>
+        </div>
+        {% for b in bookings %}
+        <div class="row">
+            <div>{{ b.event_type }}</div>
+            <div>{{ b.date }}</div>
+            <div>{{ b.location }}</div>
+            <div>{{ b.budget or 'N/A' }}</div>
+            <div>{{ b.notes or '--' }}</div>
+            <div>{{ b.created_at | string | truncate(15) }}</div>
+        </div>
+        {% endendfor %}
+    </div>
+    {% else %}
+    <p>You have no bookings yet. <a href="/#book" style="color: var(--accent);">Book an event now!</a></p>
+    {% endif %}
+</section>
+{% endblock %}
