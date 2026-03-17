@@ -1,34 +1,47 @@
 # Aura Fest Events - website
 
-A clean, modern event-decoration website inspired by leading brands. Built with **Flask (Python)** + **HTML/CSS/JS**.
+A premium event-decoration and planning website inspired by modern design trends.
+
+## Tech Stack
+- **Backend:** Node.js, Express
+- **Database:** MongoDB (via native `mongodb` driver)
+- **Frontend:** HTML/CSS/JS with Nunjucks templating
+- **Authentication:** bcrypt & express-session
 
 ## Features
 - Home, Services, Gallery, Contact pages
-- Booking form → stored in SQLite
-- Enquiry form (AJAX) → stored in SQLite
-- Simple Admin page (`/admin?token=...`)
-- Responsive, modern UI
+- Booking & Enquiry forms natively integrating with MongoDB
+- User Authentication (Login / Signup)
+- Call-agent & Chat functionality widget built-in
+- Admin Dashboard to view all enquiries and bookings
+- Responsive, dark-themed UI with fluid animations
 
 ## Local Setup
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env  # edit SECRET_KEY and ADMIN_TOKEN if you want
-python app.py
-# open http://localhost:5000
-```
+1. **Install Node.js** (v18+)
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Environment Setup:** Create a `.env` file in the root based on your needs.
+   ```env
+   PORT=5000
+   MONGO_URI=mongodb://localhost:27017/auraFest
+   SECRET_KEY=your_secret_key
+   ADMIN_TOKEN=your_admin_token
+   ```
+   *(For production, use your MongoDB Atlas connection string).*
+4. **Run the Server:**
+   ```bash
+   npm start
+   ```
+   or for development:
+   ```bash
+   npm run dev
+   ```
+5. **Access Application:** Open `http://localhost:5000` in your browser.
 
-## Deploy (one simple option)
-- Create a repo on GitHub
-- Push this folder
-- Deploy to **Render**, **Railway**, **Fly.io**, **Vercel (via Python)**, or **Heroku** with a single click
-- Set environment variables: `SECRET_KEY`, `ADMIN_TOKEN`
-- Make sure the instance has write access for SQLite or switch to a cloud DB.
-
-## Adding Gallery Images
-Place photos into `static/images/` and they will auto-appear on the Gallery page.
+## Admin Access
+Go to `/admin-login` and input your `ADMIN_TOKEN` to view leads and bookings.
 
 ---
-
-Made for: **Aura Fest Events** 🎉
+Made for: **Aura Fest Events** 

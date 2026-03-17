@@ -1,47 +1,18 @@
 {% extends "base.html" %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
+
 {% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('.login-form');
-  if (!form) return;
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const res = await fetch("{{ url_for('login') }}", {
-      method: 'POST',
-      body: fd
-    });
-    let data;
-    try {
-      data = await res.json();
-    } catch {
-      // fallback to HTML if not JSON
-      const html = await res.text();
-      document.querySelector('.login-container').innerHTML = html;
-      return;
-    }
-    if (data.ok) {
-      localStorage.setItem('user', fd.get('email'));
-      if (fd.get('email') === 'admin') {
-        window.location.href = "{{ url_for('admin_dashboard') }}";
-      } else {
-        window.location.href = "{{ url_for('index') }}";
-      }
-    } else {
-      document.querySelector('.login-container').innerHTML = `<div style='color:red;text-align:center;'>${data.error || 'Login failed.'}</div>` + document.querySelector('.login-container').innerHTML;
-    }
-  });
-});
-</script>
 {% endblock %}
+
 {% block content %}
 <section class="login-section">
   <div class="login-container">
     <h2 class="login-title">Login to Aura Fest Events</h2>
     <form method="POST" action="{{ url_for('login') }}" class="login-form">
+      {{ csrf_token() }}
       <div class="form-group">
         <label for="email">Email or Phone</label>
         <input type="text" name="email" id="email" required>
@@ -53,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <button type="submit" class="btn">Login</button>
     </form>
     {% if error %}
-      <p style="color:red; text-align:center;">{{ error }}</p>
+    <p style="color:red; text-align:center;">{{ error }}</p>
     {% endif %}
     <p style="text-align:center; margin-top:10px;">
       Don’t have an account? <a href="{{ url_for('signup') }}">Sign up here</a>

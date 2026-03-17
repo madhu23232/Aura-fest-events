@@ -3,13 +3,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 {% block extra_js %}
-<!-- No JS: use normal form POST for signup -->
 {% endblock %}
 {% block content %}
 <section class="login-section">
   <div class="login-container">
     <h2 class="login-title">Sign Up for Aura Fest Events</h2>
     <form method="POST" action="{{ url_for('signup') }}" class="login-form">
+      {{ csrf_token() }}
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" required>
@@ -28,6 +28,9 @@
       </div>
       <button type="submit" class="btn">Sign Up</button>
     </form>
+    {% if error %}
+    <p style="color:red; text-align:center;">{{ error }}</p>
+    {% endif %}
     <p style="text-align:center; margin-top:10px;">
       Already have an account? <a href="{{ url_for('login') }}">Login here</a>
     </p>

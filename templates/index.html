@@ -33,7 +33,7 @@
     <h3>Baby Shower</h3>
     <p>Soft palettes, welcome boards, and cute centerpieces.</p>
   </a>
-  <a class="feature" href="{{ url_for('corprate') }}">
+  <a class="feature" href="{{ url_for('corporate') }}">
     <h3>Corporate</h3>
     <p>Product launches, brand activations, and annual days.</p>
   </a>
@@ -46,19 +46,19 @@
       <h4>Classic Birthday</h4>
       <p>Backdrop + balloon garland + cake table styling</p>
       <div class="price">₹4,999</div>
-      <button class="btn btn-primary" onclick="prefillBooking('Birthday', 'Classic Birthday')">Book</button>
+  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Birthday', 'Classic Birthday')">Book</a>
     </article>
     <article class="card">
       <h4>Premium Baby Shower</h4>
       <p>Backdrop + neon + welcome board + photo booth</p>
       <div class="price">₹9,999</div>
-      <button class="btn btn-primary" onclick="prefillBooking('Baby Shower', 'Premium Baby Shower')">Book</button>
+  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Baby Shower', 'Premium Baby Shower')">Book</a>
     </article>
     <article class="card">
       <h4>Elegant Wedding Stage</h4>
       <p>Floral arch + stage drapes + LED wash lights</p>
       <div class="price">₹29,999</div>
-      <button class="btn btn-primary" onclick="prefillBooking('Wedding', 'Elegant Wedding Stage')">Book</button>
+  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Wedding', 'Elegant Wedding Stage')">Book</a>
     </article>
   </div>
 </section>
@@ -66,6 +66,7 @@
 <section id="book" class="container booking">
   <h2>Book Your Event</h2>
   <form method="post" action="/api/book" class="form-grid" onsubmit="return validateBooking()">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="text" name="name" placeholder="Your Name *" required>
     <input type="email" name="email" placeholder="Email">
     <input type="tel" name="phone" placeholder="Phone *" required>

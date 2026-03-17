@@ -1,2 +1,8 @@
+node__pycache__/
+*.pyc
+.env
+madhu.env
+.venv/
 node_modules/
-.vscode/
+oracleJdk-25/
+instance//
