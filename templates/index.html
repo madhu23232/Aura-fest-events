@@ -1,89 +1,316 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-text">
-      <h1>Make Your Moments <span class="grad">Unforgettable</span></h1>
-      <p>From intimate birthdays to grand weddings — Aura Fest Events crafts bespoke decorations that wow your guests.</p>
-      <div class="cta">
+  <div class="container hero-grid">
+    <div class="hero-card fade-in">
+      <span class="eyebrow">Live Event Design</span>
+      <h1 class="hero-title">We turn blank venues into <span style="color: var(--gold);">cinematic celebrations</span>.</h1>
+      <p class="hero-copy">Aura Fest Events designs birthdays, weddings, baby showers, and corporate launches with layered decor, lighting moods, stage styling, floral focus points, and booking support that feels easy from the first click.</p>
+
+      <div class="hero-actions">
         <a class="btn btn-primary" href="#book">Book Your Event</a>
-        <a class="btn btn-outline" href="{{ url_for('gallery') }}">View Gallery</a>
+        <a class="btn btn-outline" href="{{ url_for('gallery') }}">Explore Gallery</a>
+      </div>
+
+      <div class="hero-kpis">
+        <div class="hero-kpi">
+          <strong>4 Core Styles</strong>
+          <span>Birthday, wedding, baby shower, and corporate decor journeys.</span>
+        </div>
+        <div class="hero-kpi">
+          <strong>24h Response</strong>
+          <span>Fast follow-up after you submit your booking request.</span>
+        </div>
+        <div class="hero-kpi">
+          <strong>Custom Themes</strong>
+          <span>Color palettes, stages, backdrops, blooms, balloons, and signage.</span>
+        </div>
       </div>
     </div>
-    <div class="hero-art">
-      <div class="blob"></div>
-      <div class="photo-card">
-        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Aura Fest Events">
-      
+
+    <div class="hero-stage fade-in">
+      <div class="stage-badge">Live Decor Preview</div>
+      <div class="decor-layers">
+        <div class="decor-backdrop"></div>
+        <div class="decor-ring"></div>
+        <div class="decor-centerpiece"></div>
+        <div class="decor-card decor-card-left">
+          <strong>Birthday Glow</strong>
+          <span>Balloon tunnel, neon name sign, cake spotlight.</span>
+        </div>
+        <div class="decor-card decor-card-right">
+          <strong>Wedding Bloom</strong>
+          <span>Floral arch, aisle candles, warm stage ambience.</span>
+        </div>
+      </div>
+
+      <div class="stats-strip">
+        <div>
+          <strong>Stylish Entry</strong>
+          <span>Welcome boards and photo corners.</span>
+        </div>
+        <div>
+          <strong>Stage Mood</strong>
+          <span>Layered drapes, lights, and florals.</span>
+        </div>
+        <div>
+          <strong>Guest Flow</strong>
+          <span>Layouts designed for movement and pictures.</span>
+        </div>
+        <div>
+          <strong>Booking Ease</strong>
+          <span>Quick enquiry to planning pipeline.</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="container features">
-  <a class="feature" href="{{ url_for('birthday') }}">
-    <h3>Birthday Decor</h3>
-    <p>Trendy balloon arches, neon signs, and themed backdrops.</p>
-  </a>
-  <a class="feature" href="{{ url_for('wedding') }}">
-    <h3>Weddings</h3>
-    <p>Elegant mandaps, floral installations, and stage styling.</p>
-  </a>
-  <a class="feature" href="{{ url_for('babyshower') }}">
-    <h3>Baby Shower</h3>
-    <p>Soft palettes, welcome boards, and cute centerpieces.</p>
-  </a>
-  <a class="feature" href="{{ url_for('corporate') }}">
-    <h3>Corporate</h3>
-    <p>Product launches, brand activations, and annual days.</p>
-  </a>
-</section>
+<section class="section">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Decoration Types</span>
+        <h2>Choose the event world you want us to build.</h2>
+      </div>
+      <p>Each category is designed as its own visual experience with different materials, mood, focal points, and guest energy.</p>
+    </div>
 
-<section class="container showcase">
-  <h2>Popular Packages</h2>
-  <div class="cards">
-    <article class="card">
-      <h4>Classic Birthday</h4>
-      <p>Backdrop + balloon garland + cake table styling</p>
-      <div class="price">₹4,999</div>
-  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Birthday', 'Classic Birthday')">Book</a>
-    </article>
-    <article class="card">
-      <h4>Premium Baby Shower</h4>
-      <p>Backdrop + neon + welcome board + photo booth</p>
-      <div class="price">₹9,999</div>
-  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Baby Shower', 'Premium Baby Shower')">Book</a>
-    </article>
-    <article class="card">
-      <h4>Elegant Wedding Stage</h4>
-      <p>Floral arch + stage drapes + LED wash lights</p>
-      <div class="price">₹29,999</div>
-  <a class="btn btn-primary" href="#book" onclick="prefillBooking('Wedding', 'Elegant Wedding Stage')">Book</a>
-    </article>
+    <div class="features-grid">
+      <a class="feature-card fade-in" href="{{ url_for('birthday') }}">
+        <span class="feature-icon"><i class="fa-solid fa-cake-candles"></i></span>
+        <h3>Birthday Decor</h3>
+        <p>Bold balloon styling, kids themes, neon signs, shimmer walls, and colorful dessert stations.</p>
+      </a>
+      <a class="feature-card fade-in" href="{{ url_for('wedding') }}">
+        <span class="feature-icon"><i class="fa-solid fa-ring"></i></span>
+        <h3>Wedding Decor</h3>
+        <p>Elegant mandaps, floral ceilings, aisle design, stage composition, and romantic lighting scenes.</p>
+      </a>
+      <a class="feature-card fade-in" href="{{ url_for('babyshower') }}">
+        <span class="feature-icon"><i class="fa-solid fa-baby"></i></span>
+        <h3>Baby Shower Decor</h3>
+        <p>Soft palettes, personalized backdrops, welcome installations, table stories, and sweet photo zones.</p>
+      </a>
+      <a class="feature-card fade-in" href="{{ url_for('corporate') }}">
+        <span class="feature-icon"><i class="fa-solid fa-briefcase"></i></span>
+        <h3>Corporate Decor</h3>
+        <p>Brand launches, professional stages, media walls, guest reception design, and modern event finishing.</p>
+      </a>
+    </div>
   </div>
 </section>
 
-<section id="book" class="container booking">
-  <h2>Book Your Event</h2>
-  <form method="post" action="/api/book" class="form-grid" onsubmit="return validateBooking()">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <input type="text" name="name" placeholder="Your Name *" required>
-    <input type="email" name="email" placeholder="Email">
-    <input type="tel" name="phone" placeholder="Phone *" required>
-    <select name="event_type" id="event_type" required>
-      <option value="">Event Type *</option>
-      <option>Birthday</option>
-      <option>Baby Shower</option>
-      <option>Wedding</option>
-      <option>Corporate</option>
-      <option>Other</option>
-    </select>
-    <input type="date" name="date" required>
-    <input type="text" name="location" placeholder="City / Venue *" required>
-    <input type="text" name="budget" placeholder="Budget (₹)">
-    <textarea name="notes" id="notes" rows="4" placeholder="Notes"></textarea>
-    <button class="btn btn-primary full">Submit Booking</button>
-  </form>
+<section class="section">
+  <div class="container live-showcase">
+    <div class="story-card fade-in">
+      <span class="eyebrow">Atmosphere First</span>
+      <h3>Decor is not just what guests see. It is what they feel when they enter.</h3>
+      <p class="service-copy">We shape event spaces in layers so the first view, stage depth, focal lighting, and photo moments all work together instead of looking like separate pieces.</p>
+      <ul class="story-list">
+        <li>Entry arches and welcome decor that start the mood immediately.</li>
+        <li>Center-stage layouts built for photos, movement, and guest attention.</li>
+        <li>Decor combinations matched to elegant, playful, luxury, or branded event types.</li>
+        <li>Flexible concepts for homes, banquet halls, rooftops, lawns, and office venues.</li>
+      </ul>
+    </div>
+
+    <div class="experience-board fade-in">
+      <div class="board-top">
+        <div>
+          <span class="eyebrow">Live Experience Board</span>
+          <strong>Stage + Bloom + Glow</strong>
+        </div>
+        <p>One page now carries the same premium visual language across the site.</p>
+      </div>
+      <div class="board-scene">
+        <div class="scene-spotlight scene-spotlight-left"></div>
+        <div class="scene-spotlight scene-spotlight-right"></div>
+        <div class="scene-arch"></div>
+        <div class="scene-stage"></div>
+        <div class="scene-step scene-step-one"></div>
+        <div class="scene-step scene-step-two"></div>
+        <div class="scene-pillar scene-pillar-left"></div>
+        <div class="scene-pillar scene-pillar-right"></div>
+        <div class="scene-bloom scene-bloom-one"></div>
+        <div class="scene-bloom scene-bloom-two"></div>
+        <div class="scene-bloom scene-bloom-three"></div>
+        <div class="scene-sign">Aura Fest Moment</div>
+        <div class="scene-label scene-label-left">
+          <strong>Entry Glow</strong>
+          <span>Welcome florals and warm lighting</span>
+        </div>
+        <div class="scene-label scene-label-right">
+          <strong>Photo Spot</strong>
+          <span>Backdrop ready for guest pictures</span>
+        </div>
+        <div class="scene-cards">
+          <div class="scene-card">
+            <strong>Floral Arch</strong>
+            <span>Layered bloom focus</span>
+          </div>
+          <div class="scene-card">
+            <strong>Stage Lights</strong>
+            <span>Soft premium ambience</span>
+          </div>
+          <div class="scene-card">
+            <strong>Guest Flow</strong>
+            <span>Clear central focal point</span>
+          </div>
+        </div>
+        <div class="scene-floor"></div>
+      </div>
+    </div>
+  </div>
 </section>
-<a href="{{ url_for('index') }}">Home</a>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Popular Packages</span>
+        <h2>Fast-start concepts for clients who want premium results quickly.</h2>
+      </div>
+      <p>These packages are strong starting points and can still be customized around color themes, venue size, and guest count.</p>
+    </div>
+
+    <div class="packages-grid">
+      <article class="package-card fade-in">
+        <span class="package-tag">Birthday</span>
+        <h3>Classic Birthday Glow</h3>
+        <p>Backdrop wall, balloon architecture, cake focus styling, and a photo-ready centerpiece.</p>
+        <div class="package-price">INR 4,999</div>
+        <a class="btn btn-primary" href="#book" onclick="prefillBooking('Birthday', 'Classic Birthday Glow package')">Book This Look</a>
+      </article>
+      <article class="package-card fade-in">
+        <span class="package-tag">Baby Shower</span>
+        <h3>Premium Welcome Story</h3>
+        <p>Soft-toned backdrop, custom name detail, welcome board, and elegant styling for intimate photos.</p>
+        <div class="package-price">INR 9,999</div>
+        <a class="btn btn-primary" href="#book" onclick="prefillBooking('Baby Shower', 'Premium Welcome Story package')">Book This Look</a>
+      </article>
+      <article class="package-card fade-in">
+        <span class="package-tag">Wedding</span>
+        <h3>Elegant Wedding Stage</h3>
+        <p>Floral arch, layered drape backdrop, soft spotlighting, and a complete premium stage presence.</p>
+        <div class="package-price">INR 29,999</div>
+        <a class="btn btn-primary" href="#book" onclick="prefillBooking('Wedding', 'Elegant Wedding Stage package')">Book This Look</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div>
+        <span class="eyebrow">Service Flow</span>
+        <h2>From first enquiry to final setup, the process stays clear.</h2>
+      </div>
+      <p>You do not need to guess what happens next. The booking system and event planning steps are now presented with a cleaner experience.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-tile fade-in">
+        <span class="service-icon"><i class="fa-solid fa-message"></i></span>
+        <h3>1. Tell us your event idea</h3>
+        <p>Share your event type, venue, date, budget, and any theme references you already have in mind.</p>
+        <div class="service-meta"><span>Easy brief</span><span>Quick start</span></div>
+      </div>
+      <div class="service-tile fade-in">
+        <span class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+        <h3>2. We shape the decor direction</h3>
+        <p>We align the stage, background, colors, flowers, balloons, and focal installations with your celebration style.</p>
+        <div class="service-meta"><span>Visual planning</span><span>Theme matching</span></div>
+      </div>
+      <div class="service-tile fade-in">
+        <span class="service-icon"><i class="fa-solid fa-lightbulb"></i></span>
+        <h3>3. We refine the final experience</h3>
+        <p>Details like signage, table corners, photo spots, and light mood are arranged so the setup feels complete.</p>
+        <div class="service-meta"><span>Event polish</span><span>Guest impact</span></div>
+      </div>
+      <div class="service-tile fade-in">
+        <span class="service-icon"><i class="fa-solid fa-star"></i></span>
+        <h3>4. You walk into a live-ready venue</h3>
+        <p>The final goal is a space that photographs beautifully and feels exciting before the first guest even sits down.</p>
+        <div class="service-meta"><span>Venue reveal</span><span>Memory making</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="container booking-stage section">
+  <div class="booking-intro fade-in">
+    <span class="booking-kicker">Booking Studio</span>
+    <h2>Book your event through a richer planning interface.</h2>
+    <p>Pick your celebration type, tell us the venue vision, and send your request through a better booking experience built around real event planning needs.</p>
+  </div>
+
+  <div class="booking-panel fade-in">
+    <div class="booking-sidebar">
+      <div class="booking-sidebar-card">
+        <span class="booking-mini">What you get</span>
+        <h3>A booking flow designed for actual clients, not just a plain form.</h3>
+        <ul class="booking-list">
+          <li>Event categories matched to the main decor services.</li>
+          <li>Space to mention theme ideas, guest count, venue details, and special requests.</li>
+          <li>A faster route from enquiry to callback and planning.</li>
+        </ul>
+      </div>
+      <div class="booking-glow-card">
+        <strong>Response Window</strong>
+        <p>Most booking requests can be reviewed within 24 hours after submission.</p>
+      </div>
+    </div>
+
+    <form method="post" action="/api/book" class="booking-form" onsubmit="return validateBooking()">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="booking-form-grid">
+        <div class="booking-field booking-field-wide">
+          <label for="booking-name">Your Name</label>
+          <input id="booking-name" type="text" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="booking-field">
+          <label for="booking-email">Email</label>
+          <input id="booking-email" type="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="booking-field">
+          <label for="booking-phone">Phone</label>
+          <input id="booking-phone" type="tel" name="phone" placeholder="Enter your phone number" required>
+        </div>
+        <div class="booking-field">
+          <label for="event_type">Event Type</label>
+          <select name="event_type" id="event_type" required>
+            <option value="">Choose event type</option>
+            <option>Birthday</option>
+            <option>Baby Shower</option>
+            <option>Wedding</option>
+            <option>Corporate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="booking-field">
+          <label for="booking-date">Event Date</label>
+          <input id="booking-date" type="date" name="date" required>
+        </div>
+        <div class="booking-field booking-field-wide">
+          <label for="booking-location">City or Venue</label>
+          <input id="booking-location" type="text" name="location" placeholder="Tell us the venue or city" required>
+        </div>
+        <div class="booking-field">
+          <label for="booking-budget">Budget</label>
+          <input id="booking-budget" type="text" name="budget" placeholder="Budget in INR">
+        </div>
+        <div class="booking-field booking-field-wide">
+          <label for="notes">Theme Notes</label>
+          <textarea name="notes" id="notes" rows="5" placeholder="Share theme ideas, favorite colors, guest count, setup style, or special requests"></textarea>
+        </div>
+      </div>
+      <div class="booking-actions">
+        <button class="btn btn-primary booking-submit">Submit Booking</button>
+        <span class="booking-note">Aura Fest will review your request and follow up with the next step.</span>
+      </div>
+    </form>
+  </div>
+</section>
 {% endblock %}

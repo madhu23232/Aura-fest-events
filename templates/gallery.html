@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="container page-hero">
-  <h1>Gallery</h1>
-  <p>A glimpse of our recent setups.</p>
-</section>
-<section class="container gallery">
-  {% if images %}
-    <div class="masonry">
-      {% for img in images %}
-        <img src="{{ img }}" alt="Aura Fest event setup">
-      {% endfor %}
+<section class="section">
+  <div class="container page-banner fade-in">
+    <div class="page-banner-grid">
+      <div>
+        <span class="eyebrow">Gallery</span>
+        <h1>Recent setups, styled corners, and event spaces we brought to life.</h1>
+        <p>Browse through a visual mix of celebration moods, stage ideas, decor textures, and guest-ready event scenes from Aura Fest Events.</p>
+      </div>
+      <div class="mini-stack">
+        <div class="mini-card">
+          <strong>Photo-Ready Designs</strong>
+          <span>Each setup is shaped for a strong first look and memorable photo moments.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Multiple Event Types</strong>
+          <span>Birthday, wedding, baby shower, and premium celebration inspiration in one place.</span>
+        </div>
+      </div>
     </div>
-  {% else %}
-    <p>No images yet. Add your photos to <code>static/images/</code>.</p>
-  {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if images %}
+      <div class="gallery-grid">
+        {% for img in images %}
+          <article class="gallery-card fade-in">
+            <div class="gallery-frame">
+              <img src="{{ img }}" alt="Aura Fest event setup">
+            </div>
+            <h3>Event Setup {{ loop.index }}</h3>
+            <p>Styled visual detail from an Aura Fest celebration setup.</p>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="gallery-card fade-in">
+        <h3>Gallery Coming Alive</h3>
+        <p class="gallery-note">No images were found yet. Add photos to <code>static/images/</code> and they will appear here in the new gallery layout.</p>
+      </div>
+    {% endif %}
+  </div>
 </section>
 {% endblock %}

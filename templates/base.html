@@ -4,15 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ 'Aura Fest Events' }}</title>
-  <meta name="description" content="you dream it we make it" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap"
-    rel="stylesheet">
+  <title>{{ title or 'Aura Fest Events' }}</title>
+  <meta name="description" content="Aura Fest Events creates immersive event decoration experiences across Bangalore." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🎉</text></svg>">
@@ -21,65 +20,85 @@
 </head>
 
 <body>
+  <canvas class="site-canvas" id="site-canvas" aria-hidden="true"></canvas>
+  <div class="site-noise" aria-hidden="true"></div>
+  <div class="site-orb site-orb-one" aria-hidden="true"></div>
+  <div class="site-orb site-orb-two" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="{{ url_for('index') }}">Aura fest<span>Events</span></a>
-      <nav>
+      <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark">Aura</span>
+        <span class="brand-text">Fest Events</span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" data-nav-menu>
+        <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('services') }}">Services</a>
         <a href="{{ url_for('gallery') }}">Gallery</a>
         <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('login') }}">login </a>
-        <a href="https://instagram.com/aura_fest_events" target="_blank">
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="https://instagram.com/aura_fest_events" target="_blank" rel="noreferrer" aria-label="Instagram">
           <i class="fab fa-instagram"></i>
         </a>
-        <a class="btn btn-primary" href="#book">Book Now</a>
+        <a class="btn btn-primary" href="/#book">Book Now</a>
       </nav>
     </div>
   </header>
 
-  {% block content %}{% endblock %}
+  <main class="page-shell">
+    {% block content %}{% endblock %}
+  </main>
 
   <footer class="site-footer">
     <div class="container footer-grid">
-      <div>
-        <h4>Aura Fest Events<br> you dream it we make it</h4>
-        <p>Premium event decoration & planning across Bangalore</p>
+      <div class="footer-panel">
+        <span class="eyebrow">Aura Fest Events</span>
+        <h4>You dream it. We make it unforgettable.</h4>
+        <p>Premium event decoration, styled planning, and live ambiance design for birthdays, weddings, baby showers, and corporate experiences.</p>
       </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="{{ url_for('services') }}">Services</a></li>
-          <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
-          <li><a href="{{ url_for('contact') }}">Contact</a></li>
-        </ul>
+
+      <div class="footer-panel">
+        <span class="eyebrow">Quick Links</span>
+        <a href="{{ url_for('services') }}">Services</a>
+        <a href="{{ url_for('gallery') }}">Gallery</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('login') }}">User Login</a>
       </div>
-      <div>
-        <h4>Contact</h4>
-        <p>Phone: +91-9611468744 <br>Phone: +91-7619699970 <br>Email: aurafestevents@gmail.com</p>
+
+      <div class="footer-panel">
+        <span class="eyebrow">Contact</span>
+        <a href="tel:+919611468744">+91 96114 68744</a>
+        <a href="tel:+917619699970">+91 76196 99970</a>
+        <a href="mailto:aurafestevents@gmail.com">aurafestevents@gmail.com</a>
+        <a href="https://instagram.com/aura_fest_events" target="_blank" rel="noreferrer">Instagram</a>
       </div>
     </div>
-    <div class="container center" style="margin-top:20px;">
-      <a href="https://instagram.com/aura_fest_events" target="_blank"
-        style="display:inline-block; margin-bottom:10px;">
-        <i class="fab fa-instagram"></i> Follow us on Instagram
-      </a>
-      <p class="copyright">© 2025 Aura Fest Events. All rights reserved.</p>
+    <div class="container footer-bottom">
+      <p>© 2026 Aura Fest Events. Crafted for moments that feel live, warm, and cinematic.</p>
     </div>
   </footer>
 
   {% block extra_js %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 
-  <!-- Floating Chat/Call Widget -->
   <div class="floating-widget">
     <div class="fw-menu" id="fw-menu">
-      <a href="https://wa.me/917353631147" target="_blank" class="fw-item chat">
-        <i class="fab fa-whatsapp"></i> Chat with us
+      <a href="https://wa.me/917353631147" target="_blank" rel="noreferrer" class="fw-item chat">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat on WhatsApp</span>
       </a>
       <a href="tel:+919611468744" class="fw-item call">
-        <i class="fas fa-phone-alt"></i> Call an Agent
+        <i class="fas fa-phone-alt"></i>
+        <span>Call Our Team</span>
       </a>
     </div>
-    <button class="fw-btn" onclick="document.getElementById('fw-menu').classList.toggle('active')">
+    <button class="fw-btn" type="button" data-widget-toggle aria-label="Open contact widget">
       <i class="fas fa-headset"></i>
     </button>
   </div>

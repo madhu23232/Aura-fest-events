@@ -1,16 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="container page-hero">
-  <h1>Contact Us</h1>
-  <p>Send an enquiry and our team will reach you within 24 hours.</p>
-</section>
-<section class="container contact">
-  <form class="form-grid" id="enquiry-form" onsubmit="return sendEnquiry(event)">
-    <input type="text" name="name" placeholder="Your Name *" required>
-    <input type="email" name="email" placeholder="Email">
-    <input type="tel" name="phone" placeholder="Phone *" required>
-    <textarea name="message" rows="4" placeholder="Tell us about your event"></textarea>
-    <button class="btn btn-primary full" type="submit">Send Enquiry</button>
-  </form>
+<section class="section">
+  <div class="container contact-grid">
+    <div class="contact-panel fade-in">
+      <span class="eyebrow">Contact Aura Fest</span>
+      <h2>Tell us about your event and we will help shape the right decor plan.</h2>
+      <p>Share your celebration type, venue mood, and any styling direction you already have. Our team will review your enquiry and reach out within 24 hours.</p>
+
+      <form class="form-grid" id="enquiry-form" onsubmit="return sendEnquiry(event)">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Email address">
+        <input type="tel" name="phone" placeholder="Phone number" required>
+        <textarea name="message" rows="5" placeholder="Tell us about your event, decor style, venue, or preferred colors"></textarea>
+        <button class="btn btn-primary full" type="submit">Send Enquiry</button>
+      </form>
+    </div>
+
+    <div class="mini-stack fade-in">
+      <div class="contact-card">
+        <strong>Phone</strong>
+        <p><a href="tel:+919611468744">+91 96114 68744</a><br><a href="tel:+917619699970">+91 76196 99970</a></p>
+      </div>
+      <div class="contact-card">
+        <strong>Email</strong>
+        <p><a href="mailto:aurafestevents@gmail.com">aurafestevents@gmail.com</a></p>
+      </div>
+      <div class="contact-card">
+        <strong>Instagram</strong>
+        <p><a href="https://instagram.com/aura_fest_events" target="_blank" rel="noreferrer">@aura_fest_events</a></p>
+      </div>
+      <div class="contact-card">
+        <strong>Best For</strong>
+        <p>Birthdays, weddings, baby showers, intimate home events, and professional corporate decor experiences.</p>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}

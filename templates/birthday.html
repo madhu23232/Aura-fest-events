@@ -1,46 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Decorations - Aura Fest Events</title>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
-</head>
-<body>
-
 {% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+{% endblock %}
 {% block content %}
-<section class="container service-page fade-in">
-  <h2>Birthday Decorations</h2>
-  <p>Celebrate birthdays with stunning themes, balloon arches, neon lights, and backdrops tailored to your choice.</p>
-  <div class="cards">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/birthday1.jpg') }}" alt="Birthday Classic">
-      <h4>Classic Birthday</h4>
-      <p>Backdrop + balloon garland + cake table styling</p>
-      <div class="price">₹4,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/birthday2.jpg') }}" alt="Birthday Neon">
-      <h4>Neon Theme</h4>
-      <p>Backdrop + neon sign + balloon arch</p>
-      <div class="price">₹7,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/birthday3.jpg') }}" alt="Birthday Premium">
-      <h4>Premium Theme Party</h4>
-      <p>Custom backdrop + balloon decor + table setup + photo booth</p>
-      <div class="price">₹12,999</div>
+<section class="service-page-shell">
+  <div class="container service-hero fade-in">
+    <div class="service-hero-grid">
+      <div>
+        <span class="eyebrow">Birthday Decor</span>
+        <h1>Birthday setups with energy, glow, and a strong photo moment.</h1>
+        <p>From playful kid themes to premium adult celebrations, we build birthday spaces with balloon architecture, statement backdrops, neon details, cake styling, and warm guest-facing decor.</p>
+      </div>
+      <div class="service-visual">
+        <div class="visual-card">
+          <strong>Perfect For</strong>
+          <span>Home birthdays, surprise setups, terrace celebrations, banquet events, and themed kids parties.</span>
+        </div>
+        <div class="visual-card">
+          <strong>Signature Mood</strong>
+          <span>Colorful, lively, modern, and highly photo-friendly with bold decor placement.</span>
+        </div>
+      </div>
     </div>
   </div>
-  <a href="{{ url_for('index') }}" class="btn btn-outline" style="margin:20px;">← Back to Home</a>
-  <a href="https://wa.me/917353631147" target="_blank" class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+
+  <section class="section">
+    <div class="container offers-grid">
+      <article class="service-offer fade-in">
+        <span class="package-tag">Starter</span>
+        <h3>Classic Balloon Entry</h3>
+        <p>Backdrop styling, balloon garland, cake table setup, and a polished celebration corner.</p>
+        <div class="service-price">INR 7,999</div>
+        <ul class="offer-list">
+          <li>Birthday backdrop focus</li>
+          <li>Balloon styling with color theme</li>
+          <li>Cake table ready for photos</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Popular</span>
+        <h3>Neon Theme Party</h3>
+        <p>Neon sign effect, layered balloons, shimmer textures, and a stronger party atmosphere.</p>
+        <div class="service-price">INR 11,999</div>
+        <ul class="offer-list">
+          <li>Glow-style photo wall</li>
+          <li>Statement sign or name setup</li>
+          <li>More premium visual impact</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Premium</span>
+        <h3>Luxury Birthday Story</h3>
+        <p>Custom theme stage, table styling, focal lighting, and an elevated guest entry mood.</p>
+        <div class="service-price">INR 15,999</div>
+        <ul class="offer-list">
+          <li>Custom theme direction</li>
+          <li>Photo booth style zone</li>
+          <li>Premium decor layering</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-banner fade-in">
+      <div class="cta-banner-grid">
+        <div>
+          <span class="eyebrow">Explore More</span>
+          <h2>Looking for another celebration style?</h2>
+          <p>See wedding, baby shower, and corporate decor flows, or jump straight into booking your birthday setup.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-outline" href="{{ url_for('wedding') }}">Weddings</a>
+          <a class="btn btn-outline" href="{{ url_for('babyshower') }}">Baby Showers</a>
+          <a class="btn btn-primary" href="/#book">Book Birthday Decor</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
 {% endblock %}
-
-<script src="https://kit.fontawesome.com/a2e0e6adad.js" crossorigin="anonymous"></script>
-</body>
-</html>

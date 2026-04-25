@@ -1,57 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corporate Events - Aura Fest Events</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
-</head>
-<body>
-  
-<header class="site-header">
-  <div class="container nav">
-    <div class="brand">Aura <span>Fest</span></div>
-    <nav>
-      <a href="{{ url_for('index') }}">Home</a>
-      <a href="{{ url_for('gallery') }}">Gallery</a>
-      <a href="{{ url_for('contact') }}">Contact</a>
-    </nav>
-  </div>
-</header>
-
 {% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+{% endblock %}
 {% block content %}
-<section class="container service-page fade-in">
-  <h2>Corporate Event Decorations</h2>
-  <p>Professional setups for product launches, annual days, conferences, and brand activations.</p>
-  <div class="cards">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/corp1.jpg') }}" alt="Corporate Launch">
-      <h4>Product Launch</h4>
-      <p>Stage backdrop + lighting + branding elements</p>
-      <div class="price">₹19,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/corp2.jpg') }}" alt="Corporate Annual Day">
-      <h4>Annual Day Setup</h4>
-      <p>Stage decor + LED lighting + audio-visual setup</p>
-      <div class="price">₹29,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/corp3.jpg') }}" alt="Corporate Premium">
-      <h4>Premium Corporate Event</h4>
-      <p>Stage + branding + seating decor + lighting package</p>
-      <div class="price">₹49,999</div>
+<section class="service-page-shell">
+  <div class="container service-hero fade-in">
+    <div class="service-hero-grid">
+      <div>
+        <span class="eyebrow">Corporate Decor</span>
+        <h1>Professional event environments with brand clarity and stronger stage structure.</h1>
+        <p>For corporate launches, annual days, conferences, and premium office events, we create cleaner visual systems that support branding, guest flow, stage focus, and polished presentation.</p>
+      </div>
+      <div class="service-visual">
+        <div class="visual-card">
+          <strong>Perfect For</strong>
+          <span>Brand activations, annual events, product launches, office stages, media walls, and guest reception spaces.</span>
+        </div>
+        <div class="visual-card">
+          <strong>Signature Mood</strong>
+          <span>Structured, modern, premium, brand-aware, and built to look composed in person and in photos.</span>
+        </div>
+      </div>
     </div>
   </div>
-  <a href="{{ url_for('index') }}" class="btn btn-outline" style="margin:20px;">← Back to Home</a>
-  <a href="https://wa.me/917353631147" target="_blank" class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+
+  <section class="section">
+    <div class="container offers-grid">
+      <article class="service-offer fade-in">
+        <span class="package-tag">Launch</span>
+        <h3>Product Reveal Setup</h3>
+        <p>Stage backdrop, brand elements, clean lighting, and a focused space for launch visuals.</p>
+        <div class="service-price">INR 19,999</div>
+        <ul class="offer-list">
+          <li>Brand-first visual direction</li>
+          <li>Entry and focal backdrop styling</li>
+          <li>Professional launch framing</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Popular</span>
+        <h3>Annual Day Stage</h3>
+        <p>Stage decor, clean lighting, AV-friendly arrangement, and a polished corporate event mood.</p>
+        <div class="service-price">INR 29,999</div>
+        <ul class="offer-list">
+          <li>Structured guest-facing layout</li>
+          <li>Stage and lighting coordination</li>
+          <li>Balanced formal atmosphere</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Premium</span>
+        <h3>Full Corporate Experience</h3>
+        <p>Branding walls, stage styling, seating decor detailing, and a stronger premium finish throughout the venue.</p>
+        <div class="service-price">INR 49,999</div>
+        <ul class="offer-list">
+          <li>Premium event finish</li>
+          <li>Stronger guest and media impression</li>
+          <li>Expanded styling coverage</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-banner fade-in">
+      <div class="cta-banner-grid">
+        <div>
+          <span class="eyebrow">Explore More</span>
+          <h2>Need to compare celebration and professional event styles?</h2>
+          <p>You can jump between birthdays, weddings, baby showers, and the main booking experience from here.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-outline" href="{{ url_for('birthday') }}">Birthdays</a>
+          <a class="btn btn-outline" href="{{ url_for('wedding') }}">Weddings</a>
+          <a class="btn btn-primary" href="/#book">Book Corporate Decor</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
 {% endblock %}
-
-<script src="https://kit.fontawesome.com/a2e0e6adad.js" crossorigin="anonymous"></script>
-</body>
-</html>

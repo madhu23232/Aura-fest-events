@@ -5,30 +5,62 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
-<section class="login-section">
-  <div class="login-container">
-    <h2 class="login-title">Login to Aura Fest Events</h2>
-    <form method="POST" action="{{ url_for('login') }}" class="login-form">
-      {{ csrf_token() }}
-      <div class="form-group">
-        <label for="email">Email or Phone</label>
-        <input type="text" name="email" id="email" required>
+<section class="auth-shell auth-shell-login">
+  <canvas class="auth-canvas" data-auth-canvas></canvas>
+  <div class="auth-noise"></div>
+  <div class="container auth-layout">
+    <div class="auth-story auth-reveal">
+      <span class="auth-kicker">User Login</span>
+      <h1>Log in to manage your bookings and plan your event with ease.</h1>
+      <p>Access your account to view booking details, check your event requests, and continue planning your special day.</p>
+      <div class="auth-points">
+        <div class="auth-point">
+          <strong>Easy Login</strong>
+          <span>Sign in with your email or phone to access your account quickly.</span>
+        </div>
+        <div class="auth-point">
+          <strong>Booking Updates</strong>
+          <span>See your booking information and stay updated on your event requests.</span>
+        </div>
+        <div class="auth-point">
+          <strong>Plan Faster</strong>
+          <span>Keep your event details in one place and move ahead with your booking easily.</span>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
+    </div>
+
+    <div class="auth-card auth-reveal auth-reveal-delay">
+      <div class="auth-card-top">
+        <span class="auth-chip">Aura Fest Events</span>
+        <h2 class="auth-title">Login</h2>
+        <p class="auth-subtitle">Welcome back. Log in to continue your booking and event planning.</p>
       </div>
-      <button type="submit" class="btn">Login</button>
-    </form>
-    {% if error %}
-    <p style="color:red; text-align:center;">{{ error }}</p>
-    {% endif %}
-    <p style="text-align:center; margin-top:10px;">
-      Don’t have an account? <a href="{{ url_for('signup') }}">Sign up here</a>
-    </p>
+
+      <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+        {{ csrf_token() }}
+        <div class="auth-field">
+          <label for="email">Email or Phone</label>
+          <input type="text" name="email" id="email" placeholder="Enter email or phone" required>
+        </div>
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="auth-submit">Login</button>
+      </form>
+
+      {% if error %}
+      <p class="auth-error">{{ error }}</p>
+      {% endif %}
+
+      <p class="auth-switch">
+        Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>
+      </p>
+    </div>
   </div>
 </section>
 {% endblock %}

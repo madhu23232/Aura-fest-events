@@ -1,47 +1,87 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="container page-hero">
-  <h1>Services</h1>
-  <p>Tailored decoration solutions for every occasion.</p>
+<section class="section">
+  <div class="container page-banner fade-in">
+    <div class="page-banner-grid">
+      <div>
+        <span class="eyebrow">All Services</span>
+        <h1>Decor categories designed to feel alive, elegant, and guest-ready.</h1>
+        <p>Every Aura Fest service is built around one goal: turning your venue into a complete event experience instead of just placing decor items around a room.</p>
+      </div>
+      <div class="mini-stack">
+        <div class="mini-card">
+          <strong>Custom Styling</strong>
+          <span>Backdrop design, stage focus, floral balance, signage, lights, and photo corners.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Flexible Venues</strong>
+          <span>Home events, banquet halls, rooftops, lawns, offices, and intimate celebration spaces.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<section class="container grid-2">
-  <div>
-    <h3>Birthdays</h3>
-    <ul class="tick">
-      <li>Theme curation & invitations</li>
-      <li>Balloon decor & neon signage</li>
-      <li>Cake table styling</li>
-    </ul>
+
+<section class="section">
+  <div class="container">
+    <div class="services-grid">
+      <a class="service-tile fade-in" href="{{ url_for('birthday') }}">
+        <span class="service-icon"><i class="fa-solid fa-cake-candles"></i></span>
+        <h3>Birthday Events</h3>
+        <p>Theme curation, balloon sculpting, neon accents, shimmer walls, table styling, and joyful photo spots.</p>
+        <ul class="service-list">
+          <li>Theme-based styling for kids and adults</li>
+          <li>Balloon backdrops and entry decor</li>
+          <li>Cake zone and picture-friendly setup</li>
+        </ul>
+      </a>
+
+      <a class="service-tile fade-in" href="{{ url_for('wedding') }}">
+        <span class="service-icon"><i class="fa-solid fa-heart"></i></span>
+        <h3>Wedding Celebrations</h3>
+        <p>Mandaps, floral structures, aisle decor, stage composition, and a softer premium ambience across the venue.</p>
+        <ul class="service-list">
+          <li>Stage and mandap visual planning</li>
+          <li>Floral installations and warm lighting</li>
+          <li>Elegant guest-facing focal points</li>
+        </ul>
+      </a>
+
+      <a class="service-tile fade-in" href="{{ url_for('babyshower') }}">
+        <span class="service-icon"><i class="fa-solid fa-baby"></i></span>
+        <h3>Baby Shower Styling</h3>
+        <p>Soft palettes, personalized welcome decor, sweet table moments, and refined family celebration setups.</p>
+        <ul class="service-list">
+          <li>Backdrops and welcome boards</li>
+          <li>Pastel balloon and floral mixes</li>
+          <li>Photo booth and centerpiece styling</li>
+        </ul>
+      </a>
+
+      <a class="service-tile fade-in" href="{{ url_for('corporate') }}">
+        <span class="service-icon"><i class="fa-solid fa-building"></i></span>
+        <h3>Corporate Events</h3>
+        <p>Launches, brand spaces, annual events, and formal stage experiences with cleaner and more structured decor.</p>
+        <ul class="service-list">
+          <li>Brand activation decor flow</li>
+          <li>Stage, AV mood, and reception styling</li>
+          <li>Professional guest and media impression</li>
+        </ul>
+      </a>
+    </div>
   </div>
-  <div>
-    <h3>Weddings</h3>
-    <ul class="tick">
-      <li>Stage & mandap design</li>
-      <li>Floral installations</li>
-      <li>Lighting & ambience</li>
-    </ul>
+</section>
+
+<section class="section">
+  <div class="container cta-banner fade-in">
+    <div class="cta-banner-grid">
+      <div>
+        <span class="eyebrow">Need A Custom Theme?</span>
+        <h2>Share your idea and we will help shape the right decor direction.</h2>
+        <p>From half saree functions to intimate home celebrations, we can adapt the design style to your event type and venue mood.</p>
+      </div>
+      <a class="btn btn-primary" href="/#book">Start Booking</a>
+    </div>
   </div>
-  <div>
-    <h3>Baby Shower</h3>
-    <ul class="tick">
-      <li>Backdrop + welcome board</li>
-      <li>Photo booth props</li>
-      <li>flower decor</li>
-    </ul>
-  </div>
-  <div>
-    <h3>Corporate</h3>
-    <ul class="tick">
-      <li>Brand activations</li>
-      <li>Stage & AV setup</li>
-      <li>Gala dinner themes</li>
-    </ul>
-  </div>
-  <div>
-    <h3>half saree function</h3>
-    <ul>
-      <li>theam based events</li>
-      <li>flower decor</li>
-      <li>balloon decor</li>
 </section>
 {% endblock %}

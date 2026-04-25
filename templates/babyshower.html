@@ -1,58 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baby Shower Decorations - Aura Fest Events</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
-</head>
-<body>
-
-<header class="site-header">
-  <div class="container nav">
-    <div class="brand">Aura <span>Fest</span></div>
-    <nav>
-      <a href="{{ url_for('index') }}">Home</a>
-      <a href="{{ url_for('gallery') }}">Gallery</a>
-      <a href="{{ url_for('contact') }}">Contact</a>
-    </nav>
-  </div>
-</header>
-
 {% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+{% endblock %}
 {% block content %}
-<section class="container service-page fade-in">
-  <h2>Baby Shower Decorations</h2>
-  <p>Soft color palettes, themed backdrops, welcome boards, and cute centerpieces to celebrate new beginnings.</p>
-  <div class="cards">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/baby1.jpg') }}" alt="Baby Shower Basic">
-      <h4>Basic Setup</h4>
-      <p>Backdrop + balloon arch + welcome board</p>
-      <div class="price">₹5,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/baby2.jpg') }}" alt="Baby Shower Premium">
-      <h4>Premium Package</h4>
-      <p>Backdrop + neon + themed table decor + centerpieces</p>
-      <div class="price">₹9,999</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/baby3.jpg') }}" alt="Baby Shower Luxury">
-      <h4>Luxury Baby Shower</h4>
-      <p>Backdrop + balloon decor + custom stage + photo booth</p>
-      <div class="price">₹14,999</div>
+<section class="service-page-shell">
+  <div class="container service-hero fade-in">
+    <div class="service-hero-grid">
+      <div>
+        <span class="eyebrow">Baby Shower Decor</span>
+        <h1>Soft, sweet, and graceful setups for a joyful family celebration.</h1>
+        <p>Our baby shower decor blends pastel moods, warm backdrops, floral softness, welcome details, and charming photo corners so the whole space feels welcoming and celebration-ready.</p>
+      </div>
+      <div class="service-visual">
+        <div class="visual-card">
+          <strong>Perfect For</strong>
+          <span>Home baby showers, intimate hall functions, family photos, and gentle themed celebration setups.</span>
+        </div>
+        <div class="visual-card">
+          <strong>Signature Mood</strong>
+          <span>Warm, soft-toned, personalized, elegant, and comfortable for all-age guests.</span>
+        </div>
+      </div>
     </div>
   </div>
-  <a href="{{ url_for('index') }}" class="btn btn-outline" style="margin:20px;">← Back to Home</a>
-  <a href="https://wa.me/917353631147" target="_blank" class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+
+  <section class="section">
+    <div class="container offers-grid">
+      <article class="service-offer fade-in">
+        <span class="package-tag">Starter</span>
+        <h3>Basic Welcome Setup</h3>
+        <p>Backdrop wall, balloon styling, and a gentle entry experience for close family celebrations.</p>
+        <div class="service-price">INR 5,999</div>
+        <ul class="offer-list">
+          <li>Soft pastel layout</li>
+          <li>Welcome board styling</li>
+          <li>Compact photo corner</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Popular</span>
+        <h3>Premium Theme Setup</h3>
+        <p>Enhanced backdrop, neon or name detail, themed table setup, and more polished decor layers.</p>
+        <div class="service-price">INR 9,999</div>
+        <ul class="offer-list">
+          <li>Personalized setup direction</li>
+          <li>Center table styling</li>
+          <li>Stronger photo-friendly scene</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Luxury</span>
+        <h3>Signature Baby Shower Scene</h3>
+        <p>Stage styling, balloon and floral layering, custom setup mood, and a fuller family event look.</p>
+        <div class="service-price">INR 14,999</div>
+        <ul class="offer-list">
+          <li>Luxury decor composition</li>
+          <li>Expanded photo setup</li>
+          <li>Warm premium atmosphere</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-banner fade-in">
+      <div class="cta-banner-grid">
+        <div>
+          <span class="eyebrow">Explore More</span>
+          <h2>Need another decor category for your family celebrations?</h2>
+          <p>Move between birthdays, weddings, and booking when you are comparing styles and budgets.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-outline" href="{{ url_for('birthday') }}">Birthdays</a>
+          <a class="btn btn-outline" href="{{ url_for('wedding') }}">Weddings</a>
+          <a class="btn btn-primary" href="/#book">Book Baby Shower Decor</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
 {% endblock %}
-
-<script src="https://kit.fontawesome.com/a2e0e6adad.js" crossorigin="anonymous"></script>
-</body>
-</html>

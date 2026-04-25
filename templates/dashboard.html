@@ -30,7 +30,7 @@
             <div>{{ b.notes or '--' }}</div>
             <div>{{ b.created_at | string | truncate(15) }}</div>
         </div>
-        {% endendfor %}
+        {% endfor %}
     </div>
     {% else %}
     <p>You have no bookings yet. <a href="/#book" style="color: var(--accent);">Book an event now!</a></p>

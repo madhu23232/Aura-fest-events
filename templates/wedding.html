@@ -1,43 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Decorations - Aura Fest Events</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
-</head>
-<body>
 {% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+{% endblock %}
 {% block content %}
-<section class="container service-page fade-in">
-  <h2>Wedding Decorations</h2>
-  <p>Choose from elegant mandaps, floral arches, stage styling, and premium lighting packages.</p>
-  <div class="cards">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/wedding1.jpg') }}" alt="Wedding Mandap">  
-      <h4>Traditional Mandap</h4>
-      <p>Classic setup with floral decor and stage drapes.</p>
-      <div class="price">₹25,000</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/wedding2.jpg') }}" alt="Wedding Floral Arch">
-      <h4>Floral Arch Stage</h4>
-      <p>Modern arch with premium flowers and LED wash lights.</p>
-      <div class="price">₹35,000</div>
-    </div>
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/wedding3.jpg') }}" alt="Wedding Premium">
-      <h4>Luxury Wedding Package</h4>
-      <p>Mandap + Floral Installations + Stage + Lighting</p>
-      <div class="price">₹60,000</div>
+<section class="service-page-shell">
+  <div class="container service-hero fade-in">
+    <div class="service-hero-grid">
+      <div>
+        <span class="eyebrow">Wedding Decor</span>
+        <h1>Wedding spaces designed with softness, depth, and premium stage presence.</h1>
+        <p>We create wedding decor that feels elegant from the first entry moment to the final stage reveal, with florals, drapes, warm lights, aisle details, and guest-facing visual balance.</p>
+      </div>
+      <div class="service-visual">
+        <div class="visual-card">
+          <strong>Perfect For</strong>
+          <span>Mandaps, reception stages, engagement ceremonies, intimate wedding venues, and premium hall setups.</span>
+        </div>
+        <div class="visual-card">
+          <strong>Signature Mood</strong>
+          <span>Romantic, layered, floral-led, warm-lit, and visually elegant for photos and guest arrival.</span>
+        </div>
+      </div>
     </div>
   </div>
-  <a href="{{ url_for('index') }}" class="btn btn-outline" style="margin:20px;">← Back to Home</a>
-  <a href="https://wa.me/917353631147" target="_blank" class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+
+  <section class="section">
+    <div class="container offers-grid">
+      <article class="service-offer fade-in">
+        <span class="package-tag">Classic</span>
+        <h3>Traditional Mandap</h3>
+        <p>Classic stage setup with floral accents, drape styling, and a calm ceremonial mood.</p>
+        <div class="service-price">INR 25,000</div>
+        <ul class="offer-list">
+          <li>Traditional wedding visual flow</li>
+          <li>Floral and stage detailing</li>
+          <li>Guest-focused centerpiece setup</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Popular</span>
+        <h3>Floral Arch Stage</h3>
+        <p>Modern floral arch with layered backdrop, premium blooms, and stronger visual framing.</p>
+        <div class="service-price">INR 35,000</div>
+        <ul class="offer-list">
+          <li>Modern floral composition</li>
+          <li>LED wash light support</li>
+          <li>Photo-ready stage architecture</li>
+        </ul>
+      </article>
+      <article class="service-offer fade-in">
+        <span class="package-tag">Luxury</span>
+        <h3>Full Wedding Experience</h3>
+        <p>Mandap, floral installations, aisle styling, stage lighting, and a stronger luxury ambience.</p>
+        <div class="service-price">INR 60,000</div>
+        <ul class="offer-list">
+          <li>Expanded venue styling</li>
+          <li>Elegant aisle and stage balance</li>
+          <li>Premium visual storytelling</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-banner fade-in">
+      <div class="cta-banner-grid">
+        <div>
+          <span class="eyebrow">Explore More</span>
+          <h2>Need another event style for the same family celebration season?</h2>
+          <p>Pair your wedding decor ideas with birthdays, baby showers, or a direct booking request from the homepage.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-outline" href="{{ url_for('birthday') }}">Birthdays</a>
+          <a class="btn btn-outline" href="{{ url_for('babyshower') }}">Baby Showers</a>
+          <a class="btn btn-primary" href="/#book">Book Wedding Decor</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
 {% endblock %}
-</body>
-</html>

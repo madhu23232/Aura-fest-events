@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Event Bookings</h2>
-<table>
-  <tr>
-    <th>Name</th><th>Email</th><th>Phone</th><th>Event Type</th><th>Date</th><th>Location</th><th>Budget</th><th>Notes</th><th>Created At</th>
-  </tr>
-  {% for b in bookings %}
-  <tr>
-    <td>{{ b[0] }}</td>
-    <td>{{ b[1] }}</td>
-    <td>{{ b[2] }}</td>
-    <td>{{ b[3] }}</td>
-    <td>{{ b[4] }}</td>
-    <td>{{ b[5] }}</td>
-    <td>{{ b[6] }}</td>
-    <td>{{ b[7] }}</td>
-    <td>{{ b[8] }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<section class="container page-hero">
+  <h1>Admin Login</h1>
+  <p>Enter the admin token to access bookings and enquiry data.</p>
+</section>
+
+<section class="container" style="max-width: 560px; padding-bottom: 60px;">
+  <form method="post" class="card" style="padding: 24px;">
+    {% if error %}
+    <p style="margin-top:0; color:#ff9b9b;">{{ error }}</p>
+    {% endif %}
+    <label for="token" style="display:block; margin-bottom: 8px; font-weight: 600;">Admin Token</label>
+    <input
+      id="token"
+      name="token"
+      type="password"
+      placeholder="Enter admin token"
+      required
+      style="width:100%; padding: 14px; border-radius: 12px; border: 1px solid #2a2e3f; background:#171a26; color:inherit; margin-bottom: 16px;">
+    <button type="submit" class="btn btn-primary">Sign In</button>
+  </form>
+</section>
 {% endblock %}

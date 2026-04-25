@@ -6,3 +6,5 @@ madhu.env
 node_modules/
 oracleJdk-25/
 instance//
+server.err.log
+server.out.log
