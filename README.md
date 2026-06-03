@@ -28,8 +28,15 @@ A premium event-decoration and planning website inspired by modern design trends
    MONGO_URI=mongodb://localhost:27017/auraFest
    SECRET_KEY=your_secret_key
    ADMIN_TOKEN=your_admin_token
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_SECURE=false
+   SMTP_USER=aurafestevents@gmail.com
+   SMTP_PASS=your_gmail_app_password
+   BOOKING_FROM_EMAIL=aurafestevents@gmail.com
    ```
    *(For production, use your MongoDB Atlas connection string).*
+   *(For Gmail, create an App Password in the Google account and use that value for `SMTP_PASS`.)*
 4. **Run the Server:**
    ```bash
    npm start

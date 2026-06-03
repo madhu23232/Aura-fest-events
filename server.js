@@ -5,6 +5,7 @@ const nunjucks = require('nunjucks');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const { MongoClient, ObjectId } = require('mongodb');
+const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 
 function loadEnvFiles() {
@@ -30,6 +31,13 @@ const MONGO_DB_NAME = process.env.MONGO_DB_NAME || '';
 const SECRET_KEY = process.env.SECRET_KEY || 'dev-secret';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
 const DB_TIMEOUT_MS = parseInt(process.env.DB_TIMEOUT_MS || '5000', 10);
+const SMTP_HOST = process.env.SMTP_HOST || '';
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
+const SMTP_SECURE = String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true';
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
+const BOOKING_FROM_EMAIL = process.env.BOOKING_FROM_EMAIL || SMTP_USER || 'aurafestevents@gmail.com';
+const SMTP_CONNECTION_TIMEOUT_MS = parseInt(process.env.SMTP_CONNECTION_TIMEOUT_MS || '10000', 10);
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -77,6 +85,7 @@ env.addGlobal('url_for', (name, params) => {
 });
 env.addGlobal('csrf_token', () => '');
 let db; let client;
+let mailTransporter = null;
 
 function getMongoHost(uri) {
 	try {
@@ -109,6 +118,125 @@ function formatDbConnectionError(err) {
 		return 'MongoDB refused the connection. If you are using local MongoDB, make sure the MongoDB service is running. If you are using Atlas, verify the host and port in MONGO_URI.';
 	}
 	return message;
+}
+
+function createMailTransporter() {
+	const missingSettings = [];
+	if (!SMTP_HOST) missingSettings.push('SMTP_HOST');
+	if (!SMTP_USER) missingSettings.push('SMTP_USER');
+	if (!SMTP_PASS) missingSettings.push('SMTP_PASS');
+
+	if (missingSettings.length > 0) {
+		console.warn(`Booking confirmation emails are disabled because SMTP settings are incomplete. Missing: ${missingSettings.join(', ')}`);
+		return null;
+	}
+
+	return nodemailer.createTransport({
+		host: SMTP_HOST,
+		port: SMTP_PORT,
+		secure: SMTP_SECURE,
+		requireTLS: !SMTP_SECURE,
+		connectionTimeout: SMTP_CONNECTION_TIMEOUT_MS,
+		greetingTimeout: SMTP_CONNECTION_TIMEOUT_MS,
+		socketTimeout: SMTP_CONNECTION_TIMEOUT_MS,
+		auth: {
+			user: SMTP_USER,
+			pass: SMTP_PASS
+		}
+	});
+}
+
+function formatSmtpError(err) {
+	const message = err && err.message ? err.message : String(err);
+	if (/Missing credentials for "PLAIN"/i.test(message) || /EAUTH/i.test(message)) {
+		return 'SMTP authentication failed. For Gmail, set SMTP_PASS to a Google App Password for the sending account.';
+	}
+	if (/Invalid login/i.test(message)) {
+		return 'SMTP login was rejected. Double-check SMTP_USER and use a valid Google App Password in SMTP_PASS.';
+	}
+	if (/ETIMEDOUT|ECONNREFUSED|ENOTFOUND/i.test(message)) {
+		return `SMTP server connection failed for ${SMTP_HOST}:${SMTP_PORT}. Check the host, port, firewall, and internet connection.`;
+	}
+	return message;
+}
+
+async function initializeMailTransporter() {
+	const transporter = createMailTransporter();
+	if (!transporter) {
+		return null;
+	}
+
+	try {
+		await transporter.verify();
+		console.log(`SMTP ready for booking emails via ${SMTP_HOST}:${SMTP_PORT} as ${SMTP_USER}`);
+		return transporter;
+	} catch (err) {
+		console.error('SMTP verification failed:', formatSmtpError(err));
+		return null;
+	}
+}
+
+function escapeHtml(value) {
+	return String(value || '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+async function sendBookingConfirmationEmail(booking) {
+	if (!mailTransporter || !booking.email) {
+		return 'skipped';
+	}
+
+	const safeName = escapeHtml(booking.name);
+	const safeEventType = escapeHtml(booking.event_type);
+	const safeDate = escapeHtml(booking.date);
+	const safeLocation = escapeHtml(booking.location);
+	const safeBudget = escapeHtml(booking.budget || 'To be discussed');
+	const safeNotes = escapeHtml(booking.notes || 'No additional notes shared yet.');
+
+	await mailTransporter.sendMail({
+		from: `"Aura Fest Events" <${BOOKING_FROM_EMAIL}>`,
+		to: booking.email,
+		replyTo: BOOKING_FROM_EMAIL,
+		subject: `Booking received for your ${booking.event_type} event`,
+		text: [
+			`Hi ${booking.name},`,
+			'',
+			'Thank you for booking with Aura Fest Events.',
+			'We have received your request and our team will contact you shortly.',
+			'',
+			'Booking details:',
+			`Event type: ${booking.event_type}`,
+			`Event date: ${booking.date}`,
+			`Location: ${booking.location}`,
+			`Budget: ${booking.budget || 'To be discussed'}`,
+			`Notes: ${booking.notes || 'No additional notes shared yet.'}`,
+			'',
+			'Regards,',
+			'Aura Fest Events'
+		].join('\n'),
+		html: `
+			<div style="font-family:Arial,sans-serif;line-height:1.6;color:#1f2937;">
+				<p>Hi ${safeName},</p>
+				<p>Thank you for booking with <strong>Aura Fest Events</strong>.</p>
+				<p>We have received your request and our team will contact you shortly.</p>
+				<p><strong>Booking details</strong></p>
+				<ul>
+					<li><strong>Event type:</strong> ${safeEventType}</li>
+					<li><strong>Event date:</strong> ${safeDate}</li>
+					<li><strong>Location:</strong> ${safeLocation}</li>
+					<li><strong>Budget:</strong> ${safeBudget}</li>
+					<li><strong>Notes:</strong> ${safeNotes}</li>
+				</ul>
+				<p>Regards,<br>Aura Fest Events</p>
+			</div>
+		`
+	});
+
+	return 'sent';
 }
 
 async function connectDb() {
@@ -187,17 +315,27 @@ app.post('/api/enquiry', async (req, res) => {
 
 app.post('/api/book', async (req, res) => {
 	const { name, email, phone, event_type, date, location, budget, notes } = req.body || {};
-	const required = [name, phone, event_type, date, location];
+	const required = [name, email, phone, event_type, date, location];
 	if (!required.every(Boolean)) {
 		return res.status(400).send('Missing required fields. Please go back and try again.');
 	}
 	if (!db) return res.status(500).send('Database not connected. Please try again later.');
-	await db.collection('bookings').insertOne({ name, email, phone, event_type, date, location, budget, notes, created_at: new Date() });
-	res.redirect('/booking_success');
+	const booking = { name, email, phone, event_type, date, location, budget, notes, created_at: new Date() };
+	await db.collection('bookings').insertOne(booking);
+
+	let emailStatus = 'skipped';
+	try {
+		emailStatus = await sendBookingConfirmationEmail(booking);
+	} catch (err) {
+		emailStatus = 'failed';
+		console.error('Booking confirmation email failed:', err);
+	}
+
+	res.redirect(`/booking_success?email=${encodeURIComponent(emailStatus)}`);
 });
 
 app.get('/booking_success', (req, res) => {
-	res.render('booking_success.html');
+	res.render('booking_success.html', { emailStatus: req.query.email || 'skipped' });
 });
 
 // Signup/Login
@@ -293,11 +431,13 @@ app.use((req, res) => {
 (async () => {
 	try {
 		await connectDb();
+		mailTransporter = await initializeMailTransporter();
 		app.listen(PORT, '0.0.0.0', () => {
 			console.log(`Server listening on http://localhost:${PORT}`);
 		});
 	} catch (err) {
 		console.error('Database connection failed. Starting server without DB:', formatDbConnectionError(err));
+		mailTransporter = await initializeMailTransporter();
 		app.listen(PORT, '0.0.0.0', () => {
 			console.log(`Server listening (no DB) on http://localhost:${PORT}`);
 		});

@@ -2,7 +2,10 @@ function prefillBooking(type, notes) {
   const select = document.getElementById('event_type');
   if (select) {
     const option = Array.from(select.options).find((item) => item.value.toLowerCase() === type.toLowerCase());
-    if (option) select.value = option.value;
+    if (option) {
+      select.value = option.value;
+      updateEventTypePreview();
+    }
   }
 
   const notesEl = document.getElementById('notes');
@@ -12,8 +15,155 @@ function prefillBooking(type, notes) {
   if (bookingSection) bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function updateEventTypePreview() {
+  const select = document.querySelector('[data-event-select]');
+  const shell = document.querySelector('[data-event-shell]');
+
+  if (!select || !shell) return;
+
+  const hasSelection = Boolean(select.value);
+  shell.dataset.selected = hasSelection ? 'true' : 'false';
+}
+
 function validateBooking() {
+  const hiddenDate = document.getElementById('booking-date');
+  const monthSelect = document.querySelector('[data-booking-month]');
+  const daySelect = document.querySelector('[data-booking-day]');
+  const yearSelect = document.querySelector('[data-booking-year]');
+
+  if (!hiddenDate || !monthSelect || !daySelect || !yearSelect) {
+    return true;
+  }
+
+  const month = Number.parseInt(monthSelect.value, 10);
+  const day = Number.parseInt(daySelect.value, 10);
+  const year = Number.parseInt(yearSelect.value, 10);
+
+  if (!month || !day || !year) {
+    alert('Please choose the event month, day, and year.');
+    return false;
+  }
+
+  const formattedDate = [
+    year,
+    String(month).padStart(2, '0'),
+    String(day).padStart(2, '0')
+  ].join('-');
+
+  const selectedDate = new Date(`${formattedDate}T00:00:00`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (Number.isNaN(selectedDate.getTime())) {
+    alert('Please choose a valid event date.');
+    return false;
+  }
+
+  if (selectedDate < today) {
+    alert('Please choose an upcoming event date.');
+    return false;
+  }
+
+  hiddenDate.value = formattedDate;
   return true;
+}
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+function syncBookingDate() {
+  const hiddenDate = document.getElementById('booking-date');
+  const monthSelect = document.querySelector('[data-booking-month]');
+  const daySelect = document.querySelector('[data-booking-day]');
+  const yearSelect = document.querySelector('[data-booking-year]');
+
+  if (!hiddenDate || !monthSelect || !daySelect || !yearSelect) return;
+
+  const month = Number.parseInt(monthSelect.value, 10);
+  const day = Number.parseInt(daySelect.value, 10);
+  const year = Number.parseInt(yearSelect.value, 10);
+
+  if (!month || !day || !year) {
+    hiddenDate.value = '';
+    return;
+  }
+
+  hiddenDate.value = [
+    year,
+    String(month).padStart(2, '0'),
+    String(day).padStart(2, '0')
+  ].join('-');
+}
+
+function populateBookingDays() {
+  const monthSelect = document.querySelector('[data-booking-month]');
+  const daySelect = document.querySelector('[data-booking-day]');
+  const yearSelect = document.querySelector('[data-booking-year]');
+
+  if (!monthSelect || !daySelect || !yearSelect) return;
+
+  const selectedDay = daySelect.value;
+  const month = Number.parseInt(monthSelect.value, 10);
+  const year = Number.parseInt(yearSelect.value, 10);
+  const totalDays = month && year ? getDaysInMonth(year, month) : 31;
+
+  daySelect.innerHTML = '<option value="">Day</option>';
+  for (let day = 1; day <= totalDays; day += 1) {
+    const option = document.createElement('option');
+    option.value = String(day);
+    option.textContent = String(day);
+    daySelect.append(option);
+  }
+
+  if (selectedDay && Number.parseInt(selectedDay, 10) <= totalDays) {
+    daySelect.value = selectedDay;
+  }
+}
+
+function setupBookingDatePicker() {
+  const hiddenDate = document.getElementById('booking-date');
+  const monthSelect = document.querySelector('[data-booking-month]');
+  const daySelect = document.querySelector('[data-booking-day]');
+  const yearSelect = document.querySelector('[data-booking-year]');
+
+  if (!hiddenDate || !monthSelect || !daySelect || !yearSelect) return;
+
+  const today = new Date();
+  const currentYear = today.getFullYear();
+
+  for (let year = currentYear; year <= currentYear + 5; year += 1) {
+    const option = document.createElement('option');
+    option.value = String(year);
+    option.textContent = String(year);
+    yearSelect.append(option);
+  }
+
+  monthSelect.value = String(today.getMonth() + 1);
+  yearSelect.value = String(currentYear);
+  populateBookingDays();
+  daySelect.value = String(today.getDate());
+  syncBookingDate();
+
+  monthSelect.addEventListener('change', () => {
+    populateBookingDays();
+    syncBookingDate();
+  });
+
+  yearSelect.addEventListener('change', () => {
+    populateBookingDays();
+    syncBookingDate();
+  });
+
+  daySelect.addEventListener('change', syncBookingDate);
+}
+
+function setupEventTypePicker() {
+  const select = document.querySelector('[data-event-select]');
+  if (!select) return;
+
+  updateEventTypePreview();
+  select.addEventListener('change', updateEventTypePreview);
 }
 
 async function sendEnquiry(event) {
@@ -198,4 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
   setupWidget();
   setupCanvas();
+  setupEventTypePicker();
+  setupBookingDatePicker();
 });

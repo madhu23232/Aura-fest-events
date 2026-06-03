@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="container page-hero center">
-  <h1>Booking Received 🎉</h1>
+  <h1>Booking Received</h1>
   <p>Thank you for choosing Aura Fest Events. Our coordinator will contact you shortly.</p>
+  {% if emailStatus == "sent" %}
+  <p>A confirmation email has been sent to the email address you provided.</p>
+  {% elif emailStatus == "failed" %}
+  <p>Your booking was saved, but the confirmation email could not be sent right now. Our team will still follow up with you soon.</p>
+  {% else %}
+  <p>Your booking was saved successfully. Email confirmation will be sent once the mail setup is active.</p>
+  {% endif %}
   <a class="btn btn-primary" href="{{ url_for('index') }}">Back to Home</a>
 </section>
 {% endblock %}

@@ -272,7 +272,7 @@
         </div>
         <div class="booking-field">
           <label for="booking-email">Email</label>
-          <input id="booking-email" type="email" name="email" placeholder="Enter your email">
+          <input id="booking-email" type="email" name="email" placeholder="Enter your email" required>
         </div>
         <div class="booking-field">
           <label for="booking-phone">Phone</label>
@@ -280,18 +280,45 @@
         </div>
         <div class="booking-field">
           <label for="event_type">Event Type</label>
-          <select name="event_type" id="event_type" required>
-            <option value="">Choose event type</option>
-            <option>Birthday</option>
-            <option>Baby Shower</option>
-            <option>Wedding</option>
-            <option>Corporate</option>
-            <option>Other</option>
-          </select>
+          <div class="booking-event-shell" data-event-shell>
+            <select name="event_type" id="event_type" required data-event-select>
+              <option value="">Choose event type</option>
+              <option>Birthday</option>
+              <option>Baby Shower</option>
+              <option>Wedding</option>
+              <option>Corporate</option>
+              <option>Other</option>
+            </select>
+            <span class="booking-event-arrow" aria-hidden="true"></span>
+          </div>
         </div>
         <div class="booking-field">
-          <label for="booking-date">Event Date</label>
-          <input id="booking-date" type="date" name="date" required>
+          <label for="booking-month">Event Date</label>
+          <input id="booking-date" type="hidden" name="date" required>
+          <div class="booking-date-grid">
+            <select id="booking-month" data-booking-month required>
+              <option value="">Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select id="booking-day" data-booking-day required>
+              <option value="">Day</option>
+            </select>
+            <select id="booking-year" data-booking-year required>
+              <option value="">Year</option>
+            </select>
+          </div>
+          <span class="booking-date-help">Choose a future event date using month, day, and year.</span>
         </div>
         <div class="booking-field booking-field-wide">
           <label for="booking-location">City or Venue</label>
@@ -308,7 +335,7 @@
       </div>
       <div class="booking-actions">
         <button class="btn btn-primary booking-submit">Submit Booking</button>
-        <span class="booking-note">Aura Fest will review your request and follow up with the next step.</span>
+        <span class="booking-note">Aura Fest will review your request and send a confirmation email after submission.</span>
       </div>
     </form>
   </div>
