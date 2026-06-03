@@ -3,6 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
 const { MongoClient, ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
@@ -42,10 +43,22 @@ const SMTP_CONNECTION_TIMEOUT_MS = parseInt(process.env.SMTP_CONNECTION_TIMEOUT_
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Session store configuration
+const sessionStore = process.env.NODE_ENV === 'production'
+	? MongoStore.create({ mongoUrl: MONGO_URI })
+	: new session.MemoryStore();
+
 app.use(session({
+	store: sessionStore,
 	secret: SECRET_KEY,
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	cookie: { 
+		secure: process.env.NODE_ENV === 'production',
+		httpOnly: true,
+		maxAge: 1000 * 60 * 60 * 24 // 24 hours
+	}
 }));
 
 // Static
