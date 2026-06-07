@@ -361,9 +361,16 @@ function registerRoutes() {
 			const user = await db.collection('users').findOne({ email_phone });
 			if (user && await bcrypt.compare(password, user.password)) {
 				req.session.user = { id: user._id.toString(), email_phone };
-				return res.redirect('/dashboard');
+				req.session.save((err) => {
+					if (err) {
+						console.error('Session save error:', err);
+						return res.status(500).render('error.html', { code: 500, message: 'Session error' });
+					}
+					return res.redirect('/dashboard');
+				});
+			} else {
+				return res.render('login.html', { error: 'Invalid credentials' });
 			}
-			return res.render('login.html', { error: 'Invalid credentials' });
 		});
 
 	app.get('/dashboard', requireLogin, async (req, res) => {
@@ -386,9 +393,16 @@ function registerRoutes() {
 			const token = req.body.token;
 			if (token && token === ADMIN_TOKEN) {
 				req.session.user = { isAdmin: true, role: 'admin' };
-				return res.redirect('/admin');
+				req.session.save((err) => {
+					if (err) {
+						console.error('Session save error:', err);
+						return res.status(500).render('error.html', { code: 500, message: 'Session error' });
+					}
+					return res.redirect('/admin');
+				});
+			} else {
+				return res.status(401).render('admin_login.html', { error: 'Invalid admin token' });
 			}
-			return res.status(401).render('admin_login.html', { error: 'Invalid admin token' });
 		});
 
 	app.get('/admin', requireLogin, async (req, res) => {
