@@ -44,23 +44,6 @@ const SMTP_CONNECTION_TIMEOUT_MS = parseInt(process.env.SMTP_CONNECTION_TIMEOUT_
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Session store configuration
-const sessionStore = process.env.NODE_ENV === 'production'
-	? MongoStore.create({ mongoUrl: MONGO_URI })
-	: new session.MemoryStore();
-
-app.use(session({
-	store: sessionStore,
-	secret: SECRET_KEY,
-	resave: false,
-	saveUninitialized: false,
-	cookie: { 
-		secure: process.env.NODE_ENV === 'production',
-		httpOnly: true,
-		maxAge: 1000 * 60 * 60 * 24 // 24 hours
-	}
-}));
-
 // Static
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
@@ -444,6 +427,26 @@ app.use((req, res) => {
 // Start
 (async () => {
 	try {
+		// Session store configuration (must be async for MongoStore)
+		let sessionStore;
+		if (process.env.NODE_ENV === 'production') {
+			sessionStore = await MongoStore.create({ mongoUrl: MONGO_URI });
+		} else {
+			sessionStore = new session.MemoryStore();
+		}
+
+		app.use(session({
+			store: sessionStore,
+			secret: SECRET_KEY,
+			resave: false,
+			saveUninitialized: false,
+			cookie: { 
+				secure: process.env.NODE_ENV === 'production',
+				httpOnly: true,
+				maxAge: 1000 * 60 * 60 * 24 // 24 hours
+			}
+		}));
+
 		await connectDb();
 		mailTransporter = await initializeMailTransporter();
 		app.listen(PORT, '0.0.0.0', () => {
