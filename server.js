@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 function loadEnvFiles() {
 	const envFiles = [
 		{ file: '.env', override: false },
-		{ file: 'madhu.env', override: true }
+		{ file: 'madhu.env', override: false }
 	];
 
 	for (const envFile of envFiles) {
@@ -270,7 +270,8 @@ function requireLogin(req, res, next) {
 }
 
 function isAdmin(req) {
-	return req.session && req.session.user && req.session.user.isAdmin === true;
+	const user = req.session && req.session.user;
+	return user && (user.isAdmin === true || user.role === 'admin');
 }
 
 // Routes
@@ -399,7 +400,7 @@ app.route('/admin-login')
 	.post((req, res) => {
 		const token = req.body.token;
 		if (token && token === ADMIN_TOKEN) {
-			req.session.user = { isAdmin: true };
+			req.session.user = { isAdmin: true, role: 'admin' };
 			return res.redirect('/admin');
 		}
 		return res.status(401).render('admin_login.html', { error: 'Invalid admin token' });

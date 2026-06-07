@@ -1,84 +1,112 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="container page-hero">
-	<h1>Admin Dashboard</h1>
-	<p>Monitor bookings and enquiries from one place.</p>
-</section>
-
-<section class="container" style="padding-bottom: 60px;">
-	<div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom: 24px;">
-		<a class="btn btn-primary" href="/api/admin/data" target="_blank" rel="noopener noreferrer">View Data API</a>
-		<a class="btn btn-outline" href="{{ url_for('logout') }}">Logout</a>
+<section class="container admin-shell">
+	<div class="admin-hero card">
+		<div class="admin-hero-copy">
+			<p class="admin-eyebrow">Admin Dashboard</p>
+			<h1>Bookings and enquiries in one clean view</h1>
+			<p>Track incoming requests in a structured table with quick totals and readable columns.</p>
+		</div>
+		<div class="admin-hero-actions">
+			<a class="btn btn-primary" href="/api/admin/data" target="_blank" rel="noopener noreferrer">View Data API</a>
+			<a class="btn btn-outline" href="{{ url_for('logout') }}">Logout</a>
+		</div>
 	</div>
 
 	{% if dbConnected is defined and not dbConnected %}
-	<div class="card" style="margin-bottom: 24px; border: 1px solid #7a2f2f; background: rgba(122, 47, 47, 0.18);">
+	<div class="card admin-alert">
 		<h3 style="margin-top:0;">Database Status</h3>
 		<p style="margin-bottom:0;">{{ dbError or 'Database is not connected.' }}</p>
 	</div>
 	{% endif %}
 
-	<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom: 28px;">
-		<div class="card">
-			<h3 style="margin-top:0;">Total Bookings</h3>
-			<p style="font-size:2rem; margin:0;">{{ bookings.length or 0 }}</p>
+	<div class="admin-stats">
+		<div class="card admin-stat">
+			<span>Total Bookings</span>
+			<strong>{{ bookings.length or 0 }}</strong>
 		</div>
-		<div class="card">
-			<h3 style="margin-top:0;">Total Enquiries</h3>
-			<p style="font-size:2rem; margin:0;">{{ enquiries.length or 0 }}</p>
+		<div class="card admin-stat">
+			<span>Total Enquiries</span>
+			<strong>{{ enquiries.length or 0 }}</strong>
 		</div>
 	</div>
 
-	<h2>Recent Bookings</h2>
-	{% if bookings and bookings.length > 0 %}
-	<div class="table">
-		<div class="row head" style="grid-template-columns: 1.1fr 1fr 1fr 1fr 1fr 0.9fr;">
-			<div>Name</div>
-			<div>Phone</div>
-			<div>Event</div>
-			<div>Date</div>
-			<div>Location</div>
-			<div>Budget</div>
+	<section class="admin-section">
+		<div class="section-head">
+			<div>
+				<p class="admin-eyebrow">Recent Bookings</p>
+				<h2>Latest booking records</h2>
+			</div>
 		</div>
-		{% for b in bookings %}
-		{% if loop.index <= 5 %}
-		<div class="row" style="grid-template-columns: 1.1fr 1fr 1fr 1fr 1fr 0.9fr;">
-			<div>{{ b.name }}</div>
-			<div>{{ b.phone }}</div>
-			<div>{{ b.event_type }}</div>
-			<div>{{ b.date }}</div>
-			<div>{{ b.location }}</div>
-			<div>{{ b.budget or 'N/A' }}</div>
+		{% if bookings and bookings.length > 0 %}
+		<div class="admin-table-wrap">
+			<table class="admin-table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Event</th>
+						<th>Date</th>
+						<th>Location</th>
+						<th>Budget</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for b in bookings %}
+					{% if loop.index <= 5 %}
+					<tr>
+						<td>{{ b.name }}</td>
+						<td>{{ b.phone }}</td>
+						<td><span class="admin-pill">{{ b.event_type }}</span></td>
+						<td>{{ b.date }}</td>
+						<td class="admin-cell-muted">{{ b.location }}</td>
+						<td>{{ b.budget or 'N/A' }}</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
+		{% else %}
+		<p class="admin-empty">No bookings found yet.</p>
 		{% endif %}
-		{% endfor %}
-	</div>
-	{% else %}
-	<p>No bookings found yet.</p>
-	{% endif %}
+	</section>
 
-	<h2 style="margin-top: 32px;">Recent Enquiries</h2>
-	{% if enquiries and enquiries.length > 0 %}
-	<div class="table">
-		<div class="row head" style="grid-template-columns: 1fr 1fr 1fr 2fr;">
-			<div>Name</div>
-			<div>Email</div>
-			<div>Phone</div>
-			<div>Message</div>
+	<section class="admin-section">
+		<div class="section-head">
+			<div>
+				<p class="admin-eyebrow">Recent Enquiries</p>
+				<h2>Latest enquiry records</h2>
+			</div>
 		</div>
-		{% for e in enquiries %}
-		{% if loop.index <= 5 %}
-		<div class="row" style="grid-template-columns: 1fr 1fr 1fr 2fr;">
-			<div>{{ e.name }}</div>
-			<div>{{ e.email or '--' }}</div>
-			<div>{{ e.phone }}</div>
-			<div>{{ e.message or '--' }}</div>
+		{% if enquiries and enquiries.length > 0 %}
+		<div class="admin-table-wrap">
+			<table class="admin-table admin-table-enquiries">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Message</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for e in enquiries %}
+					{% if loop.index <= 5 %}
+					<tr>
+						<td>{{ e.name }}</td>
+						<td class="admin-cell-muted">{{ e.email or '--' }}</td>
+						<td>{{ e.phone }}</td>
+						<td class="admin-message">{{ e.message or '--' }}</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
+		{% else %}
+		<p class="admin-empty">No enquiries found yet.</p>
 		{% endif %}
-		{% endfor %}
-	</div>
-	{% else %}
-	<p>No enquiries found yet.</p>
-	{% endif %}
+	</section>
 </section>
 {% endblock %}

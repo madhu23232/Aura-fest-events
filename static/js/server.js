@@ -39,6 +39,8 @@ const routeMap = {
 	contact: '/contact',
 	login: '/login',
 	signup: '/signup',
+	logout: '/logout',
+	admin_login: '/admin-login',
 	user_dashboard: '/dashboard',
 	admin_dashboard: '/admin',
 	birthday: '/birthday',
@@ -70,7 +72,8 @@ function requireLogin(req, res, next) {
 }
 
 function isAdmin(req) {
-	return req.session && req.session.user && req.session.user.isAdmin === true;
+	const user = req.session && req.session.user;
+	return user && (user.isAdmin === true || user.role === 'admin');
 }
 
 // Routes
@@ -190,7 +193,7 @@ app.route('/admin-login')
 	.post((req, res) => {
 		const token = req.body.token;
 		if (token && token === ADMIN_TOKEN) {
-			req.session.user = { isAdmin: true };
+			req.session.user = { isAdmin: true, role: 'admin' };
 			return res.redirect('/admin');
 		}
 		return res.render('admin_login.html');
