@@ -40,6 +40,9 @@ const SMTP_PASS = process.env.SMTP_PASS || '';
 const BOOKING_FROM_EMAIL = process.env.BOOKING_FROM_EMAIL || SMTP_USER || 'aurafestevents@gmail.com';
 const SMTP_CONNECTION_TIMEOUT_MS = parseInt(process.env.SMTP_CONNECTION_TIMEOUT_MS || '10000', 10);
 
+// Trust proxy for session cookies to work behind reverse proxies (Render, Heroku, etc.)
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -463,8 +466,9 @@ function registerRoutes() {
 			resave: false,
 			saveUninitialized: false,
 			cookie: { 
-				secure: process.env.NODE_ENV === 'production',
+				secure: false, // Let sameSite handle security; secure is set per-request
 				httpOnly: true,
+				sameSite: 'lax',
 				maxAge: 1000 * 60 * 60 * 24 // 24 hours
 			}
 		}));
