@@ -432,9 +432,14 @@ function registerRoutes() {
 	try {
 		// Session store configuration (must be async for MongoStore)
 		let sessionStore;
-		if (process.env.NODE_ENV === 'production') {
-			sessionStore = await MongoStore.create({ mongoUrl: MONGO_URI });
-		} else {
+		try {
+			if (process.env.NODE_ENV === 'production') {
+				sessionStore = await MongoStore.create({ mongoUrl: MONGO_URI });
+			} else {
+				sessionStore = new session.MemoryStore();
+			}
+		} catch (storeErr) {
+			console.warn('MongoStore setup failed, falling back to MemoryStore:', storeErr.message);
 			sessionStore = new session.MemoryStore();
 		}
 
@@ -453,16 +458,19 @@ function registerRoutes() {
 		// Register all routes after session middleware
 		registerRoutes();
 
-		await connectDb();
+		// Try to connect to database (non-blocking)
+		try {
+			await connectDb();
+		} catch (dbErr) {
+			console.error('Database connection failed:', formatDbConnectionError(dbErr));
+		}
+
 		mailTransporter = await initializeMailTransporter();
 		app.listen(PORT, '0.0.0.0', () => {
 			console.log(`Server listening on http://localhost:${PORT}`);
 		});
 	} catch (err) {
-		console.error('Database connection failed. Starting server without DB:', formatDbConnectionError(err));
-		mailTransporter = await initializeMailTransporter();
-		app.listen(PORT, '0.0.0.0', () => {
-			console.log(`Server listening (no DB) on http://localhost:${PORT}`);
-		});
+		console.error('Critical startup error:', err.message);
+		process.exit(1);
 	}
 })();
